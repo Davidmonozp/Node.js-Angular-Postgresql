@@ -1,5 +1,6 @@
 const express = require('express');
 const { Pool } = require('pg');
+const cors = require('cors'); // Importa cors
 
 const app = express();
 const port = 3000;
@@ -13,6 +14,11 @@ const pool = new Pool({
   port: 5432,
 });
 
+// Configuración de CORS
+
+app.use(cors({
+  origin: 'http://localhost:4200', 
+}));
 
 // Ruta GET para obtener usuarios
 app.get('/api/data', async (req, res) => {
@@ -27,18 +33,18 @@ app.get('/api/data', async (req, res) => {
 
 // Ruta POST para insertar usuario
 app.post('/api/data', express.json(), async (req, res) => {
-    const { nombre, correo, edad } = req.body;
-    try {
-      const result = await pool.query(
-        'INSERT INTO usuarios (nombre, correo, edad) VALUES ($1, $2, $3) RETURNING *',
-        [nombre, correo, edad]
-      );
-      res.status(201).json(result.rows[0]);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Error al insertar usuario');
-    }
-  });
+  const { nombre, correo, edad } = req.body;
+  try {
+    const result = await pool.query(
+      'INSERT INTO usuarios (nombre, correo, edad) VALUES ($1, $2, $3) RETURNING *',
+      [nombre, correo, edad]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al insertar usuario');
+  }
+});
 
 // Ruta PUT para actualizar usuario
 app.put('/api/data/:id', express.json(), async (req, res) => {
