@@ -16,34 +16,18 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>David</td>
-                <td>davidgmail.com</td>
-                <td>33</td>
+              <tr *ngFor="let usuario of usuarios">
+                <th scope="row">{{usuario.id}}</th>
+                <td>{{usuario.nombre}}</td>
+                <td>{{usuario.correo}}</td>
+                <td>{{usuario.edad}}</td>
                 <td>
-                  <i class="fa-solid fa-pen-to-square text-primary"></i>
-                  <i class="fa-solid fa-trash text-danger"></i>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">1</th>
-                <td>David</td>
-                <td>davidgmail.com</td>
-                <td>33</td>
-                <td>
-                  <i class="fa-solid fa-pen-to-square text-primary"></i>
-                  <i class="fa-solid fa-trash text-danger"></i>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">1</th>
-                <td>David</td>
-                <td>davidgmail.com</td>
-                <td>33</td>
-                <td>
-                  <i class="fa-solid fa-pen-to-square text-primary"></i>
-                  <i class="fa-solid fa-trash text-danger"></i>
+                  
+                  <!-- boton editar -->
+                  <i [routerLink]="['editar-usuario', usuario.id]" class="fa-solid fa-pen-to-square text-primary"></i>
+                  <!-- boton eliminar -->
+                  <i (click)="usuario.id && eliminarUsuario(usuario.id.toString())"
+                    class="fa-solid fa-trash text-danger"></i>
                 </td>
               </tr>
             </tbody>

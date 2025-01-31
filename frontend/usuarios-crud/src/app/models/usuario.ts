@@ -1,7 +1,6 @@
-import { NgModel } from "@angular/forms";
 
 export class Usuario {
-  _id?: number;
+  id?: number;
   nombre: string;
   correo: string;
   edad: number;

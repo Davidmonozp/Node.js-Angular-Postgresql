@@ -1,11 +1,11 @@
 const express = require('express');
 const { Pool } = require('pg');
-const cors = require('cors'); // Importa cors
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
 
-// Configurar la conexión a PostgreSQL
+// conexión a PostgreSQL
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
@@ -17,7 +17,7 @@ const pool = new Pool({
 // Configuración de CORS
 
 app.use(cors({
-  origin: 'http://localhost:4200', 
+  origin: 'http://localhost:4200',
 }));
 
 // Ruta GET para obtener usuarios
@@ -30,6 +30,26 @@ app.get('/api/data', async (req, res) => {
     res.status(500).send('Error al obtener los usuarios');
   }
 });
+
+// Ruta GET para obtener un solo usuario
+app.get('/api/data/:id', async (req, res) => {
+
+  try {
+    const id = req.params.id; // Obtén el ID de los parámetros de la URL
+
+    // Consulta la base de datos usando el ID
+    const result = await pool.query('SELECT * FROM usuarios WHERE id = $1', [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    res.json(result.rows[0]); // Envía el usuario encontrado
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al obtener el usuario');
+  }
+})
 
 // Ruta POST para insertar usuario
 app.post('/api/data', express.json(), async (req, res) => {
@@ -72,7 +92,7 @@ app.delete('/api/data/:id', async (req, res) => {
   try {
     const result = await pool.query('DELETE FROM usuarios WHERE id = $1 RETURNING *', [id]);
     if (result.rows.length > 0) {
-      res.status(204).send();
+      res.status(204).send('usuario eliminado');
     } else {
       res.status(404).send('Usuario no encontrado');
     }
