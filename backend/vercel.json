@@ -1,0 +1,26 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "api/data.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "api/data/[id].js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "api/data/create.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "api/data/update.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "api/data/delete.js",
+        "use": "@vercel/node"
+      }
+    ]
+  }
+  
