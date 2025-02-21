@@ -5,10 +5,14 @@
   "scripts": {
     "test": "echo \"Prueba ejecutada exitosamente\""
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
+    "express": "^4.21.2",
     "pg": "^8.13.1",
-    "@vercel/node": "^3.0.0"  
-  },
-  "license": "ISC"
+    "prueba-tecnica": "file:"
+  }
 }
