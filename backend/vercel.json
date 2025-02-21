@@ -2,24 +2,30 @@
     "version": 2,
     "builds": [
       {
-        "src": "api/data.js",
+        "src": "backend/api/data/**/*.js",
         "use": "@vercel/node"
       },
       {
-        "src": "api/data/[id].js",
+        "src": "backend/data.js",
         "use": "@vercel/node"
       },
       {
-        "src": "api/data/create.js",
+        "src": "backend/pool.js",
         "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/data/(.*)",
+        "dest": "/backend/api/data/$1"
       },
       {
-        "src": "api/data/update.js",
-        "use": "@vercel/node"
+        "src": "/data",
+        "dest": "/backend/data.js"
       },
       {
-        "src": "api/data/delete.js",
-        "use": "@vercel/node"
+        "src": "/pool",
+        "dest": "/backend/pool.js"
       }
     ]
   }
